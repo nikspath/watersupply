@@ -1,0 +1,9 @@
+<form method="POST" >{%csrf_token%}
+
+{{fm}}
+<button type="submit">save</button>
+</form>
+
+{%if mes%}
+	{{mes}}
+{%endif%}
