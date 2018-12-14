@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^first',first),
    url(r'^second',second),
    url(r'^third',third),
+   url(r'^rajlist',RajList.as_view(),name='rajlist'),
 
 
 
