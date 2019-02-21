@@ -1,0 +1,161 @@
+{%extends 'base.html'%}
+{%block content%}
+
+<script>
+    function sendinterest(data)
+    {
+        $.ajax(
+        {
+            url:'saveinerestp',
+            data:{'q':data},
+            method:'GET',
+            success: function(data)
+            {
+                if(data['obj'] != '')
+                {
+                    $("#followcnt").text(data['obj'])
+                    alert('You have sucessfully send request to agent.....He will contact you soon...')
+                }
+            }
+        });
+    } 
+    
+</script>
+  <script>
+
+function filterdata(data)
+{debugger;
+
+    $.ajax({
+        url:"/getfilterdata/",
+        data:{"priceslider":data},
+        method:"GET",
+        success:function(res)
+        {
+            console.log(res)
+        }
+    });
+}
+
+  $( function() {
+    $( "#slider-range" ).slider({
+      range: true,
+      min: 0,
+      max: 1000,
+      values: [ 0, 500 ],
+      slide: function( event, ui ) {
+
+       console.log("nkhik",ui.values[0])
+        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+        filterdata(ui.values)
+      }
+    });
+    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+      " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+  } );
+  </script>
+  <style type="text/css">
+    body{
+        margin:0px; padding: 0px; font-family: arial;
+    }
+      .listingDtls {
+            float: left;
+            width: 100%;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #999999;
+        }
+        .propertyDescription{font-size: 14px; text-align: left; line-height: 18px; word-wrap: break-word;}
+        .listingWrapper{ margin-top: 20px;}
+        .propertyInfoBox p{margin-bottom: 5px;}
+        .sendIntrstBtn{margin: 0 auto; float: initial; text-align: center;}
+        .priceDtls{text-align: center;}
+        .propertyName_heading{width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
+        .readMore_text{float: left; width: 100%; }
+        .readMore_text a{text-decoration: none; color: #525251; font-size: 13px; text-align: left;}
+  </style>
+
+<div class="container" style="background-color: #f9eaea;">
+    <div class="row">
+        <div class="listingWrapper">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-100" style="float: left;">
+        Filters 
+
+<p>
+  <label for="amount">Price range:</label>
+  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</p>
+ 
+<div id="slider-range"></div>
+
+
+
+
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-100" style="float: left;">
+                {%for i in list%}
+                <div class="row">
+                
+                    <div class="listingDtls">
+                        <div class="col-md-2 col-sm-2 col-xs-4 propertImg" style="float: left;">
+                            <img src="{{i.propertyimg.url}}" class="img-rounded img-responsive" alt="Cinque Terre" style="max-width: 100%; height: auto;">
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-7 propertyInfoBox" style="float: left;">
+                            <div class="propertyHeading">
+                                <div class="col-md-7 col-sm-7 col-xs-7" style="float: left;">
+                                    <div class="row"> 
+                                        <h3 class="propertyName_heading" style="color:red;">{{i.propertyname}}</h3>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-3" style="float: left;">
+                                   <p class="prptType">{{i.propertytype}}</p> 
+                                </div>
+                                </div>
+                                <p class="propertyDescription" style="float: left; width: 100%;">{{i.propertydesc}}</p>
+                                <p class="readMore_text"> <a href="">Read More..</a></p>
+                            </div>
+                            
+                        
+                        <div class="col-md-3 col-sm-3 col-xs-12 priceDtls" style="float: left">
+                            <p class="propertyPrice">{{i.propertyrate}}</p>
+                            <div class="sendIntrstBtn">
+                                <button onclick="sendinterest({{i.id}})" class="btn btn-success">send interest</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+<!-- 
+                <div class="table-responsive">
+                    <table class="table">
+                         <tbody>
+
+                          <tr>
+                            <td rowspan="2" width="100px">
+                                <img src="{{i.propertyimg.url}}" class="img-rounded" alt="Cinque Terre" width="100%" height="auto">
+                            </td>
+                            <td><h3 style="color:red;">{{i.propertyname}}</h3></td>
+                            <td>{{i.propertytype}}</td>
+                            <td>{{i.propertyrate}}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="2"><p>{{i.propertydesc}}</p></td>
+
+                                <td>
+                                    <button onclick="sendinterest({{i.id}})" class="btn btn-success">send interest</button>
+                                </td>
+
+                          </tr>
+                    </table>
+                </div>   -->
+                
+                
+                
+                {%endfor%}
+                </div>
+                
+                
+            </div>
+        </div>
+       </div>
+{%endblock%}

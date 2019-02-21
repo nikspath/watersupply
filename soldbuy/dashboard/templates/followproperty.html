@@ -1,0 +1,10 @@
+{% extends 'base.html'%}
+{%block content%}
+
+
+{%for i in follow%}
+{{i.propertyid}}-----{{i.propertyid.propertyrate}}
+<hr>
+{% endfor%}
+
+{%endblock%}

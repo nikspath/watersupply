@@ -1,0 +1,31 @@
+a {
+	text-decoration: None !important;
+}
+
+.div_loginform
+{
+	background-color: #81818226;
+	margin-top:10% !important;
+	box-shadow:-1px 2px 9px 3px #ccc;
+	padding:20px;
+}
+.btn_log_in
+{
+	background-color: #76b6fb !important;
+	margin-top:8px;
+	color:#eff5fc !important;
+
+}
+.logintext
+{
+	padding-top:20px;
+}
+.loginsign_btn
+{	
+
+	text-align: center;
+	padding:5px;
+	background-color: #76b6fb !important;
+	margin-top:8px;
+	color:#ccc !important;
+}

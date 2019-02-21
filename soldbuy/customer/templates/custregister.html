@@ -1,0 +1,15 @@
+{% extends 'base.html'%}
+
+{%block content%}
+
+<div class="form-group">
+<form action="customer/custregister/" method="POST">{%csrf_token%}
+  
+
+   {{form}}
+  
+  <button type="submit" class="btn btn-primary form-control">Submit</button>
+</form>
+</div>
+
+{%endblock%}
