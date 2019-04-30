@@ -1,0 +1,148 @@
+{% extends 'base.html'%}
+
+{%block content%}
+
+<script type="text/javascript">
+	$(document).ready(function(){
+
+		$("#id_quantityB").keyup(function(){			
+			calculateAmt();
+		});
+		$("#id_productB").change(function(){			
+			calculateAmt();
+		});
+
+	});
+
+function calculateAmt(){
+	$.ajax({
+			url:'gettotalamount',
+			method:'GET',
+			data:{'id':$("#id_productB").val()},
+			success:function(res){
+				result=JSON.parse(res.data);
+				$("#totalprize").text(result[0]['fields']['priceP']*$("#id_quantityB").val());
+				$("#id_totalprizeB").val(result[0]['fields']['priceP']*$("#id_quantityB").val());
+				
+			}
+
+		});
+
+}
+
+</script>
+
+
+
+<div class="container">
+	<form action="" method="POST" >{%csrf_token%}
+		<div class="col-md-12">
+			<div class="row">
+				
+					<div class="col-md-3 form-group">
+						<label for='id_productB'>Select Product</label>
+						{{form.productB}}
+					</div>	
+						<div class="col-md-3">
+							<label for='id_quantityB'>Quantity</label>
+							{{form.quantityB}}
+						</div>
+						
+						<div class="col-md-3">
+							<label for='id_payAmtB'>Payment</label>
+							
+							{{form.payAmtB}}
+						</div>
+
+						<div class="col-md-3">
+							<label >Total prize</label>
+							<div id="totalprize">0.00</div>
+							{{form.totalprizeB}}
+						</div>
+					</div>
+				
+			</div>
+		<div class="col-md-12 form-group">
+			<div class="row">
+				<div class="col-md-4">
+
+					<label for='id_customernameB'>Customer Name</label>
+					{{form.customernameB}}
+				</div>
+				<div class="col-md-4 ">
+					<label for='id_mobileB'>Customer Mobile</label>
+					{{form.mobileB}}
+
+				</div>
+				<div class="col-md-4">
+					<label for='id_customerAddress'>Customer Address</label>
+					{{form.customerAddressB}}
+					
+				</div>
+
+			
+			</div>
+		</div>
+		<div class="col-md-12 form-group">
+			<div class="row">
+			<!-- 	<div class="col-md-4">
+
+					<label for='id_isFullPayB'>Is Full Pay</label>
+					{{form.isFullPayB}}
+				</div> -->
+				<div class="col-md-4 ">
+				
+					<input type="submit" value="Book" class="btn btn-success form-control">
+
+				</div>
+			
+
+			
+			</div>
+		</div>
+		
+		</form>
+	</div>
+
+
+<div class="container">
+	{% include 'pagination.html'%}
+  <h2>Booking List</h2>
+	
+<table class="table">
+    <thead>
+      <tr>
+        <th>Customer Name</th>
+        <th>Customer Address</th>
+        <th>Mobile Number</th> 
+        <th>Paid Amount</th>
+        <th>Total Amount</th>
+        <th>Date & Time</th>
+     <!--    -->
+      </tr>
+    </thead>
+    <tbody>
+
+    {%for i in list%}
+     <tr {% if i.isFullPayB == True%} style="background-color:#8fd19e;"{%else%} style="background-color:#e86a6a;"{%endif%}>
+        <td>{{i.customernameB}}</td>
+        <td>{{i.customerAddressB}}</td>
+        <td>{{i.mobileB}}</td>
+        <td>{{i.payAmtB}}</td>
+        <td>{{i.totalprizeB}}</td>
+        <td>{{i.timestampB}}</td>
+        
+        
+      </tr>  
+		
+	{%endfor%}
+         
+     
+    </tbody>
+  </table>
+
+</div>
+	
+
+
+	{%endblock%}
